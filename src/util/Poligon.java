@@ -8,5 +8,7 @@ public class Poligon {
 	void getYMonotonePolygones(){
 		throw new UnsupportedOperationException();
 	}
-	
+	void pol(){
+		throw new UnsupportedOperationException();
+	}
 }
