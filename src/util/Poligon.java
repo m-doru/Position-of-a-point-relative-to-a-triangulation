@@ -9,7 +9,7 @@ public class Poligon {
 		throw new UnsupportedOperationException();
 	}
 	
-	void getTrangulation(){
+	void getTriangulation(){
 		return;
 	}
 }
