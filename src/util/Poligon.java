@@ -6,7 +6,7 @@ public class Poligon {
 		this.a = a;
 	}
 	
-	void getTrangulation(){
+	void getTriangulation(){
 		return;
 	}
 }
