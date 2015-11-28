@@ -9,6 +9,7 @@ public class Punct {
 	
 	double distanta(Punct punct){
 		double d = 0;
-		return d;
+		throw new UnsupportedOperationException();
 	}
+	
 }
