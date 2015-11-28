@@ -12,4 +12,7 @@ public class Poligon {
 	void getTrangulation(){
 		return;
 	}
+	void test(){
+		//lorem ipsum
+	}
 }
