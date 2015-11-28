@@ -15,4 +15,8 @@ public class Poligon {
 	void test(){
 		//lorem ipsum
 	}
+	
+	void test2(){
+		return;
+	}
 }
