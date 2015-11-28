@@ -7,8 +7,5 @@ public class Punct {
 		this.y = y;
 	}
 	
-	double distanta(Punct punct){
-		throw new UnsupportedOperationException();
-	}
 	
 }
