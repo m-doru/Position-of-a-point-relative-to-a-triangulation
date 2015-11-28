@@ -5,4 +5,8 @@ public class Poligon {
 	Poligon(int a){
 		this.a = a;
 	}
+	
+	void getTrangulation(){
+		return;
+	}
 }
