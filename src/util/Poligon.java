@@ -9,4 +9,7 @@ public class Poligon {
 		throw new UnsupportedOperationException();
 	}
 	
+	void test(){
+		
+	}
 }
