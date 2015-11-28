@@ -5,4 +5,7 @@ public class Poligon {
 	Poligon(int a){
 		this.a = a;
 	}
+	void getYMonotonePolygones(){
+		throw new UnsupportedOperationException();
+	}
 }
