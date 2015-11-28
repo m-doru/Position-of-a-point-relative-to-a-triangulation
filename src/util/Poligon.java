@@ -11,4 +11,6 @@ public class Poligon {
 	void pol(){
 		throw new UnsupportedOperationException();
 	}
+	void test(){
+	}
 }

@@ -7,5 +7,6 @@ public class Punct {
 		this.y = y;
 	}
 	
+
 	
 }
