@@ -12,5 +12,7 @@ public class Poligon {
 		throw new UnsupportedOperationException();
 	}
 	void test(){
+		int x = 23;
+		System.out.println(x);
 	}
 }
