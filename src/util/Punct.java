@@ -6,4 +6,9 @@ public class Punct {
 		this.x = x;
 		this.y = y;
 	}
+	
+	double distanta(Punct punct){
+		double d = 0;
+		return d;
+	}
 }
