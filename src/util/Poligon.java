@@ -9,7 +9,4 @@ public class Poligon {
 		throw new UnsupportedOperationException();
 	}
 	
-	void getTrangulation(){
-		return;
-	}
 }
