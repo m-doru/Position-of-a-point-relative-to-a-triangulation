@@ -27,7 +27,9 @@ public class Poligon {
 		this.varfuri.addAll(p.varfuri);
 		this.triangulare = new Triangulare(p.triangulare);
 	}
-		
+	public String toString(){
+		return varfuri.toString();
+	}
 	private ArrayList<PoligonMonoton> makeMonoton(){
 		TreeMap<Double,Segment> T = new TreeMap<>();
 		PriorityQueue<Punct> Q = new PriorityQueue<Punct>(varfuri);
@@ -107,33 +109,29 @@ public class Poligon {
 				break;
 			}
 		}
+		return getMonotonPolygons(diagonale);
 		
+	}
+	private ArrayList<PoligonMonoton> getMonotonPolygons(ArrayList<Segment> diagonale){
 		ArrayList<Punct> varfuriPoligonNemonoton = new ArrayList<Punct>(varfuri);
 		ArrayList<PoligonMonoton> poligoaneMonotone = new ArrayList<>();
-		for(Segment diagonala:diagonale){
-			ArrayList<Punct> varfuriCurente = new ArrayList<>();
-			varfuriCurente.add(diagonala.left);
-			for(int i = varfuriPoligonNemonoton.indexOf(diagonala.left) + 1; !varfuriPoligonNemonoton.get(i).equals(diagonala.right); i++){
-				varfuriCurente.add(varfuriPoligonNemonoton.get(i));
-				varfuriPoligonNemonoton.remove(i);
-			}
-			varfuriCurente.add(diagonala.right);
-			
-			poligoaneMonotone.add(new PoligonMonoton(varfuriCurente));
-		}
 		
-		poligoaneMonotone.add(new PoligonMonoton(varfuriPoligonNemonoton));
 		
 		return poligoaneMonotone;
 	}
 	public void makeTriangulare(){
 		if(this.poligoaneMonotone == null)
 			this.poligoaneMonotone = makeMonoton();
-		if(this.triangulare == null)
-			for(PoligonMonoton poligonMonoton : this.poligoaneMonotone){
-				poligonMonoton.makeTriangulare();
-				this.triangulare.add(poligonMonoton.triangulare.triunghiuri);
-			}
+		
+		for(PoligonMonoton poligonMonoton : poligoaneMonotone){
+			System.out.println(poligonMonoton);
+		}
+		throw new UnsupportedOperationException();
+//		if(this.triangulare == null)
+//			for(PoligonMonoton poligonMonoton : this.poligoaneMonotone){
+//				poligonMonoton.makeTriangulare();
+//				this.triangulare.add(poligonMonoton.triangulare.triunghiuri);
+//			}
 	}
 	
 	VertexConstants tipVarf(Punct x){
