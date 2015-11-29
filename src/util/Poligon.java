@@ -107,6 +107,7 @@ public class Poligon {
 				break;
 			}
 		}
+		System.out.println(diagonale);
 		throw new UnsupportedOperationException();
 	}
 	public void makeTriangulare(){
@@ -128,7 +129,7 @@ public class Poligon {
 		else
 		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).y > x.y && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).y > x.y){
 			double det = Triunghi.determinant(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()), x, varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()));
-			if(det > 0)
+			if(det < 0)
 				return VertexConstants.MERGE;
 			else
 				return VertexConstants.FINAL;		
@@ -136,7 +137,7 @@ public class Poligon {
 		else
 		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).y < x.y && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).y < x.y){
 			double det = Triunghi.determinant(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()), x, varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()));
-			if(det > 0)
+			if(det < 0)
 				return VertexConstants.SPLIT;
 			else
 				return VertexConstants.START;

@@ -39,7 +39,10 @@ public class Segment implements Comparable<Segment>{
 			return true;
 		return false;
 	}
-	
+	@Override
+	public String toString(){
+		return "[" + left.toString() + " " + right.toString() + "]";
+	}
 	public static boolean contains(Segment s,Punct p){
 		if(Triunghi.determinant(s.left, s.right, p) != 0)
 			return false;
