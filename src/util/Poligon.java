@@ -1,39 +1,122 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.TreeMap;
 
 public class Poligon {
+	private ArrayList<PoligonMonoton> poligoaneMonotone;
 	ArrayList<Punct> varfuri;
 	Triangulare triangulare;
 	public Poligon(){
+		this.poligoaneMonotone = null;
 		this.varfuri = new ArrayList<>();
 		this.triangulare = null;
 	}
 	
 	public Poligon(ArrayList<Punct> puncte){
+		this.poligoaneMonotone = null;
 		this.varfuri = new ArrayList<>();
 		this.varfuri.addAll(puncte);
 		this.triangulare = null;
 	}
 	
 	public Poligon(Poligon p){
+		this.poligoaneMonotone = null;
 		this.varfuri = new ArrayList<>();
 		this.varfuri.addAll(p.varfuri);
 		this.triangulare = new Triangulare(p.triangulare);
 	}
 		
-	public void add(Punct p){
-		this.varfuri.add(p);
-	}
 	private ArrayList<PoligonMonoton> makeMonoton(){
+		TreeMap<Double,Segment> T = new TreeMap<>();
+		PriorityQueue<Punct> Q = new PriorityQueue<Punct>(varfuri);
+		ArrayList<Segment> diagonale = new ArrayList<>();
+		Punct _varf;
+		while(!Q.isEmpty()){
+			_varf = Q.poll();
+			switch(this.tipVarf(_varf)){
+			case START:{
+					//inseram muchia (vi,vi+1) si setam helper la vi
+					Segment muchiePrecedenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)+1)%varfuri.size()),_varf);
+					T.put(muchiePrecedenta.right.x, muchiePrecedenta);
+				}
+				break;
+			case FINAL:{
+					//extragem din T muchia (vi-1; vi)
+					Segment muchiePrecedentaCurenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)-1 + varfuri.size())%varfuri.size()));
+					Segment muchiePrecedenta = T.get(muchiePrecedentaCurenta.right.x);
+					//verificam daca helper e de tip merge si inseram
+					if(this.tipVarf(muchiePrecedenta.helper) == VertexConstants.MERGE)
+						diagonale.add(new Segment(_varf, muchiePrecedenta.helper));
+					//scoatem (vi-1, vi) din T
+					T.remove(muchiePrecedenta.right.x, muchiePrecedenta);
+				}
+				break;
+			case SPLIT:{
+					//cautam in T cea mai apropiata muchie din partea stanga a lui vi si care a fost procesata de Linia de baleiere
+					Segment muchieOpusa = T.get(T.floorKey(_varf.x));
+					
+					//inseram diagonala de la vi la helperul muchiei gasite
+					diagonale.add(new Segment(_varf, muchieOpusa.helper));
+					//setam helperul muchiei gasite la vi
+					muchieOpusa.helper = _varf;
+					
+					//adaugam (vi; vi+1) in T
+					Segment muchieCurenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)+1)%varfuri.size()), _varf);
+					T.put(muchieCurenta.right.x, muchieCurenta);
+				}
+				break;
+			case MERGE:{
+					//extragem din T muchia (vi-1; vi)
+					Segment muchiePrecedentaCurenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)-1 + varfuri.size())%varfuri.size()));
+					Segment muchiePrecedenta = T.get(muchiePrecedentaCurenta.right.x);
+					//daca helperul muchiei e de tip merge, trasam diagnoala intre vi si helper
+					if(this.tipVarf(muchiePrecedenta.helper) == VertexConstants.MERGE)
+						diagonale.add(new Segment(_varf, muchiePrecedenta.helper));
+					
+					T.remove(muchiePrecedenta.right.x, muchiePrecedenta);
+					
+					//cautam in T cea mai apropiata muchie din partea stanga a lui vi si care a fost procesata de Linia de baleiere
+					Segment muchieOpusa = T.get(T.floorKey(_varf.x));
+					
+					if(this.tipVarf(muchieOpusa.helper) == VertexConstants.MERGE)
+						diagonale.add(new Segment(_varf, muchieOpusa.helper));
+					muchieOpusa.helper = _varf;
+				}
+				break;
+			case REGULAR_LEFT:{
+					Segment muchiePrecedentaCurenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)-1 + varfuri.size())%varfuri.size()));
+					Segment muchiePrecedenta = T.get(muchiePrecedentaCurenta.right.x);
+					if(this.tipVarf(muchiePrecedenta.helper) == VertexConstants.MERGE)
+						diagonale.add(new Segment(_varf, muchiePrecedenta.helper));
+					T.remove(muchiePrecedenta.right.x, muchiePrecedenta);
+					
+					Segment muchieCurenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)+1)%varfuri.size()), _varf);
+					T.put(muchieCurenta.right.x, muchieCurenta);
+				}
+				break;
+			case REGULAR_RIGHT:{
+					Segment muchieOpusa = T.get(T.floorKey(_varf.x));
+					if(this.tipVarf(muchieOpusa.helper) == VertexConstants.MERGE)
+						diagonale.add(new Segment(_varf, muchieOpusa.helper));
+					muchieOpusa.helper = _varf;
+				}
+				break;
+			default:
+				break;
+			}
+		}
 		throw new UnsupportedOperationException();
 	}
 	public void makeTriangulare(){
-		ArrayList<PoligonMonoton> poligoaneMonotone = makeMonoton();
-		for(PoligonMonoton poligonMonoton : poligoaneMonotone){
-			poligonMonoton.makeTriangulare();
-			triangulare.add(poligonMonoton.triangulare.triunghiuri);
-		}
+		if(this.poligoaneMonotone == null)
+			this.poligoaneMonotone = makeMonoton();
+		if(this.triangulare == null)
+			for(PoligonMonoton poligonMonoton : this.poligoaneMonotone){
+				poligonMonoton.makeTriangulare();
+				this.triangulare.add(poligonMonoton.triangulare.triunghiuri);
+			}
 	}
 	
 	VertexConstants tipVarf(Punct x){
