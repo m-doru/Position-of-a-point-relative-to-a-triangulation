@@ -28,20 +28,26 @@ public class Triunghi {
 	    return 1/2*(Math.abs(rez));
 	}
 	private static boolean equals(double _a, double _b){
-		if(Math.abs(_b-_a) > 0.00000000000001)
+		if(Math.abs(_b-_a) > 0.0000000000001)
 			return false;
 		return true;
 	}
-	public int contains(Punct p){
+	public PunctFataDeTriunghi contains(Punct p){
 		double _total, _arie1, _arie2, _arie3;
 		_total = getArie(this.a, this.b, this.c);
 		_arie1 = getArie(this.a, this.b, p);
 		_arie2 = getArie(this.a, this.c, p);
 		_arie3 = getArie(this.b, this.c, p);
 		if(equals(_total, _arie1+_arie2+_arie3)){
-			
+			if(Segment.contains(new Segment(a,b), p))
+				return PunctFataDeTriunghi.LATURA_AB;
+			if(Segment.contains(new Segment(a,c), p))
+				return PunctFataDeTriunghi.LATURA_AC;
+			if(Segment.contains(new Segment(b,c), p))
+				return PunctFataDeTriunghi.LATURA_BC;
+			return PunctFataDeTriunghi.INTERIOR;
 		}
-		return -1;
+		return PunctFataDeTriunghi.EXTERIOR;
 	}
 	@Override
 	public boolean equals(Object t){
