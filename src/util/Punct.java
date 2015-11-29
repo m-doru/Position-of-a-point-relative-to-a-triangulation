@@ -42,5 +42,22 @@ public class Punct implements Comparable<Punct>{
 		}
 		return 1;
 	}
+	public int compareStrictlyY(Punct x){
+		if(this.y < x.y)
+			return -1;	
+		if(this.y > x.y)
+			return 1;
+		return 0;
+	}
+	public int compareStriclyX(Punct x){
+		if(this.x < x.x)
+			return -1;
+		if(this.x > x.x)
+			return 1;
+		return 0;
+	}
+	public double distance(Punct x){
+		return Math.sqrt((x.x - this.x) * (x.x - this.x) + (x.y - this.y) * (x.y - this.y));
+	}
 	
 }
