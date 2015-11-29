@@ -28,6 +28,8 @@ public class Punct implements Comparable<Punct>{
 		if(this.y == x.y){
 			if(this.x < x.x)
 				return -1;
+			if(this.x == x.x)
+				return 0;
 			return 1;
 		}
 		return 1;
@@ -38,6 +40,8 @@ public class Punct implements Comparable<Punct>{
 		if(this.x == x.x){
 			if(this.y < x.y)
 				return -1;
+			if(this.y == x.y)
+				return 0;
 			return 1;
 		}
 		return 1;
