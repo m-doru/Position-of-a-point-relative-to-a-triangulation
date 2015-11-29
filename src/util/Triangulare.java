@@ -4,7 +4,17 @@ import java.util.ArrayList;
 
 public class Triangulare {
 	ArrayList<Triunghi> triunghiuri;
-	public Triangulare(){triunghiuri = new ArrayList<>();}
+	public Triangulare(){
+		this.triunghiuri = new ArrayList<>();
+	}
+	public Triangulare(Triangulare triangulare){
+		this.triunghiuri = new ArrayList<>();
+		this.triunghiuri.addAll(triangulare.triunghiuri);
+	}
+	public Triangulare(ArrayList<Triunghi> triunghiuri){
+		this.triunghiuri = new ArrayList<>();
+		this.triunghiuri.addAll(triunghiuri);
+	}
 	public void add(Triunghi t){
 		triunghiuri.add(t);
 	}
