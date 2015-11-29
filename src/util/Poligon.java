@@ -50,7 +50,7 @@ public class Poligon {
 					if(this.tipVarf(muchiePrecedenta.helper) == VertexConstants.MERGE)
 						diagonale.add(new Segment(_varf, muchiePrecedenta.helper));
 					//scoatem (vi-1, vi) din T
-					T.remove(muchiePrecedenta.right.x, muchiePrecedenta);
+					T.remove(muchiePrecedenta.right.x);
 				}
 				break;
 			case SPLIT:{
@@ -75,7 +75,7 @@ public class Poligon {
 					if(this.tipVarf(muchiePrecedenta.helper) == VertexConstants.MERGE)
 						diagonale.add(new Segment(_varf, muchiePrecedenta.helper));
 					
-					T.remove(muchiePrecedenta.right.x, muchiePrecedenta);
+					T.remove(muchiePrecedenta.right.x);
 					
 					//cautam in T cea mai apropiata muchie din partea stanga a lui vi si care a fost procesata de Linia de baleiere
 					Segment muchieOpusa = T.get(T.floorKey(_varf.x));
@@ -90,7 +90,7 @@ public class Poligon {
 					Segment muchiePrecedenta = T.get(muchiePrecedentaCurenta.right.x);
 					if(this.tipVarf(muchiePrecedenta.helper) == VertexConstants.MERGE)
 						diagonale.add(new Segment(_varf, muchiePrecedenta.helper));
-					T.remove(muchiePrecedenta.right.x, muchiePrecedenta);
+					T.remove(muchiePrecedenta.right.x);
 					
 					Segment muchieCurenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)+1)%varfuri.size()), _varf);
 					T.put(muchieCurenta.right.x, muchieCurenta);
