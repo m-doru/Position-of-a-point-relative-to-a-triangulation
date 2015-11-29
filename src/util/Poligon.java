@@ -19,4 +19,30 @@ public class Poligon {
 			triangulare.add(poligonMonoton.triangulare.triunghiuri);
 		}
 	}
+	
+	VertexConstants tipVarf(Punct x){
+		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).compareStrictlyY(x) >= 0 && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).compareStrictlyY(x) <= 0)
+			return VertexConstants.REGULAR_LEFT;
+		else
+		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).compareStrictlyY(x) <= 0 && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).compareStrictlyY(x) >= 0)
+			return VertexConstants.REGULAR_RIGHT;
+		else
+		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).y > x.y && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).y > x.y){
+			double det = Triunghi.determinant(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()), x, varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()));
+			if(det > 0)
+				return VertexConstants.MERGE;
+			else
+				return VertexConstants.FINAL;		
+		}
+		else
+		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).y < x.y && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).y < x.y){
+			double det = Triunghi.determinant(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()), x, varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()));
+			if(det > 0)
+				return VertexConstants.SPLIT;
+			else
+				return VertexConstants.START;
+		}
+		else
+			return VertexConstants.UNDEFINE;
+	}
 }
