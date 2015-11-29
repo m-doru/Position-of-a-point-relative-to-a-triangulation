@@ -6,8 +6,8 @@ public class Poligon {
 	ArrayList<Punct> varfuri;
 	Triangulare triangulare;
 	public Poligon(){
-		//TODO
-		
+		this.varfuri = new ArrayList<>();
+		this.triangulare = null;
 	}
 	
 	public Poligon(ArrayList<Punct> puncte){
@@ -22,6 +22,9 @@ public class Poligon {
 		this.triangulare = new Triangulare(p.triangulare);
 	}
 		
+	public void add(Punct p){
+		this.varfuri.add(p);
+	}
 	private ArrayList<PoligonMonoton> makeMonoton(){
 		throw new UnsupportedOperationException();
 	}
@@ -57,5 +60,9 @@ public class Poligon {
 		}
 		else
 			return VertexConstants.UNDEFINE;
+	}
+	
+	public int getPosition(Punct p){
+		throw new UnsupportedOperationException();
 	}
 }
