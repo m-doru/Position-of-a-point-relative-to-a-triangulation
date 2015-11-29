@@ -20,8 +20,28 @@ public class Triunghi {
 		this.b = new Punct(t.b);
 		this.c = new Punct(t.c);
 	}
+	public static double determinant(Punct A, Punct B, Punct C){
+		return (A.x-C.x)*(B.y-C.y) - (B.x - C.x)*(A.y - C.y);
+	}
+	public static double getArie(Punct A, Punct B, Punct C){
+		double rez = determinant(A, B, C);
+	    return 1/2*(Math.abs(rez));
+	}
+	private static boolean equals(double _a, double _b){
+		if(Math.abs(_b-_a) > 0.00000000000001)
+			return false;
+		return true;
+	}
 	public int contains(Punct p){
-		throw new UnsupportedOperationException();
+		double _total, _arie1, _arie2, _arie3;
+		_total = getArie(this.a, this.b, this.c);
+		_arie1 = getArie(this.a, this.b, p);
+		_arie2 = getArie(this.a, this.c, p);
+		_arie3 = getArie(this.b, this.c, p);
+		if(equals(_total, _arie1+_arie2+_arie3)){
+			
+		}
+		return -1;
 	}
 	@Override
 	public boolean equals(Object t){
