@@ -31,6 +31,10 @@ public class Punct implements Comparable<Punct>{
 			return true;
 		return false;
 	}
+	@Override
+	public String toString(){
+		return "(" + this.x + ";" + this.y + ")";
+	}
 	public int compareY(Punct punct){
 		if(this.y < punct.y)
 			return 1;
