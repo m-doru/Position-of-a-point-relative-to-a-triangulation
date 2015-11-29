@@ -32,5 +32,19 @@ public class Segment implements Comparable<Segment>{
 	public int compareTo(Segment segment) {
 		return this.left.compareX(segment.left);
 	}
-	//TODO equals method
+	@Override
+	public boolean equals(Object o){
+		Segment s = (Segment)o;
+		if(this.left.equals(s.left) && this.right.equals(s.right))
+			return true;
+		return false;
+	}
+	
+	public static boolean contains(Segment s,Punct p){
+		if(Triunghi.determinant(s.left, s.right, p) != 0)
+			return false;
+		if(s.left.y - s.right.y >= p.y - s.right.y)
+			return true;
+		return false;
+	}
 }
