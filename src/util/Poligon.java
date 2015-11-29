@@ -107,8 +107,24 @@ public class Poligon {
 				break;
 			}
 		}
-		System.out.println(diagonale);
-		throw new UnsupportedOperationException();
+		
+		ArrayList<Punct> varfuriPoligonNemonoton = new ArrayList<Punct>(varfuri);
+		ArrayList<PoligonMonoton> poligoaneMonotone = new ArrayList<>();
+		for(Segment diagonala:diagonale){
+			ArrayList<Punct> varfuriCurente = new ArrayList<>();
+			varfuriCurente.add(diagonala.left);
+			for(int i = varfuriPoligonNemonoton.indexOf(diagonala.left) + 1; !varfuriPoligonNemonoton.get(i).equals(diagonala.right); i++){
+				varfuriCurente.add(varfuriPoligonNemonoton.get(i));
+				varfuriPoligonNemonoton.remove(i);
+			}
+			varfuriCurente.add(diagonala.right);
+			
+			poligoaneMonotone.add(new PoligonMonoton(varfuriCurente));
+		}
+		
+		poligoaneMonotone.add(new PoligonMonoton(varfuriPoligonNemonoton));
+		
+		return poligoaneMonotone;
 	}
 	public void makeTriangulare(){
 		if(this.poligoaneMonotone == null)
