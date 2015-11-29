@@ -5,8 +5,21 @@ import java.util.ArrayList;
 public class Poligon {
 	ArrayList<Punct> varfuri;
 	Triangulare triangulare;
-	public Poligon(){//TODO
+	public Poligon(){
+		//TODO
 		
+	}
+	
+	public Poligon(ArrayList<Punct> puncte){
+		this.varfuri = new ArrayList<>();
+		this.varfuri.addAll(puncte);
+		this.triangulare = null;
+	}
+	
+	public Poligon(Poligon p){
+		this.varfuri = new ArrayList<>();
+		this.varfuri.addAll(p.varfuri);
+		this.triangulare = new Triangulare(p.triangulare);
 	}
 		
 	private ArrayList<PoligonMonoton> makeMonoton(){
