@@ -125,10 +125,13 @@ public class Poligon {
 		}
 		int notEmptyPosition;
 		while((notEmptyPosition = dcel.getNotEmptyPosition()) != -1){
-			//TODO
+			ArrayList<Integer> vertexIndexes = dcel.parcurgere(notEmptyPosition);
+			ArrayList<Punct> puncteMonotone = new ArrayList<>();
+			for(int vertexIndex : vertexIndexes)
+				puncteMonotone.add(varfuri.get(vertexIndex));
+			poligoaneMonotone.add(new PoligonMonoton(puncteMonotone));
 		}
-		throw new UnsupportedOperationException();
-//		return poligoaneMonotone;
+		return poligoaneMonotone;
 	}
 	public void makeTriangulare(){
 		if(this.poligoaneMonotone == null)
