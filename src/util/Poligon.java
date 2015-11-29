@@ -113,11 +113,22 @@ public class Poligon {
 		
 	}
 	private ArrayList<PoligonMonoton> getMonotonPolygons(ArrayList<Segment> diagonale){
-		ArrayList<Punct> varfuriPoligonNemonoton = new ArrayList<Punct>(varfuri);
 		ArrayList<PoligonMonoton> poligoaneMonotone = new ArrayList<>();
+		Graph dcel = new Graph(varfuri.size());
+		for(int i = 0; i < varfuri.size() - 1; ++i)
+			dcel.add(i, i+1);
+		dcel.add(varfuri.size() - 1, 0);
 		
-		
-		return poligoaneMonotone;
+		for(Segment diagonala : diagonale){
+			dcel.add(varfuri.indexOf(diagonala.left), varfuri.indexOf(diagonala.right));
+			dcel.add(varfuri.indexOf(diagonala.right), varfuri.indexOf(diagonala.left));
+		}
+		int notEmptyPosition;
+		while((notEmptyPosition = dcel.getNotEmptyPosition()) != -1){
+			//TODO
+		}
+		throw new UnsupportedOperationException();
+//		return poligoaneMonotone;
 	}
 	public void makeTriangulare(){
 		if(this.poligoaneMonotone == null)
