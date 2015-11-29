@@ -12,8 +12,17 @@ public class Punct implements Comparable<Punct>{
 		this.y = a.y;
 	}
 	@Override
-	public int compareTo(Punct x) {
-		return (-1)*compareY(x);
+	public int compareTo(Punct punct) {
+		if(this.y < punct.y)
+			return 1;
+		if(this.y == punct.y){
+			if(this.x < punct.x)
+				return -1;
+			if(this.x == punct.x)
+				return 0;
+			return 1;
+		}
+		return -1;
 	}
 	@Override
 	public boolean equals(Object c){
@@ -22,46 +31,46 @@ public class Punct implements Comparable<Punct>{
 			return true;
 		return false;
 	}
-	public int compareY(Punct x){
-		if(this.y < x.y)
-			return -1;
-		if(this.y == x.y){
-			if(this.x < x.x)
+	public int compareY(Punct punct){
+		if(this.y < punct.y)
+			return 1;
+		if(this.y == punct.y){
+			if(this.x < punct.x)
 				return -1;
-			if(this.x == x.x)
+			if(this.x == punct.x)
+				return 0;
+			return 1;
+		}
+		return -1;
+	}
+	public int compareX(Punct punct){
+		if(this.x < punct.x)
+			return -1;
+		if(this.x == punct.x){
+			if(this.y < punct.y)
+				return -1;
+			if(this.y == punct.y)
 				return 0;
 			return 1;
 		}
 		return 1;
 	}
-	public int compareX(Punct x){
-		if(this.x < x.x)
-			return -1;
-		if(this.x == x.x){
-			if(this.y < x.y)
-				return -1;
-			if(this.y == x.y)
-				return 0;
-			return 1;
-		}
-		return 1;
-	}
-	public int compareStrictlyY(Punct x){
-		if(this.y < x.y)
+	public int compareStrictlyY(Punct punct){
+		if(this.y < punct.y)
 			return -1;	
-		if(this.y > x.y)
+		if(this.y > punct.y)
 			return 1;
 		return 0;
 	}
-	public int compareStriclyX(Punct x){
-		if(this.x < x.x)
+	public int compareStriclyX(Punct punct){
+		if(this.x < punct.x)
 			return -1;
-		if(this.x > x.x)
+		if(this.x > punct.x)
 			return 1;
 		return 0;
 	}
-	public double distance(Punct x){
-		return Math.sqrt((x.x - this.x) * (x.x - this.x) + (x.y - this.y) * (x.y - this.y));
+	public double distance(Punct punct){
+		return Math.sqrt((punct.x - this.x) * (punct.x - this.x) + (punct.y - this.y) * (punct.y - this.y));
 	}
 	
 }
