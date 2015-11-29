@@ -22,7 +22,7 @@ public class Graph {
 		for(i = vecini.get(nod).size() - 1; i >= 0; i--){
 			if(vecin > nod && vecin > vecini.get(nod).get(i) && vecini.get(nod).get(i) > nod)
 				break;
-			if(vecin < nod && vecin < vecini.get(nod).get(i) && vecini.get(nod).get(i) < nod)
+			if(vecin < nod && vecin < vecini.get(nod).get(i))
 				break;
 		}
 		
