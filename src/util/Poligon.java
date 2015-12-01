@@ -7,7 +7,7 @@ import java.util.TreeMap;
 public class Poligon {
 	private ArrayList<PoligonMonoton> poligoaneMonotone;
 	ArrayList<Punct> varfuri;
-	Triangulare triangulare;
+	public Triangulare triangulare;
 	public Poligon(){
 		this.poligoaneMonotone = null;
 		this.varfuri = new ArrayList<>();
