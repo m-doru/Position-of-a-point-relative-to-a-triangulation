@@ -76,5 +76,16 @@ public class Punct implements Comparable<Punct>{
 	public double distance(Punct punct){
 		return Math.sqrt((punct.x - this.x) * (punct.x - this.x) + (punct.y - this.y) * (punct.y - this.y));
 	}
-	
+
+	public static Punct transforma(Punct p,double sx, double shy, double tx, double sy, double shx, double ty){
+		double newX = sx * p.x + shy * p.y + tx;
+		double newY = sy * p.y + shx * p.x + ty;
+		return new Punct(newX, newY);
+	}
+	public static Punct rotateZ(Punct p, double theta){
+		return new Punct(p.x*Math.cos(theta) + p.y * Math.sin(theta), -p.x * Math.sin(theta) + p.y * Math.cos(theta));
+	}
+	public static Punct rotateY(Punct p, double theta){
+		return new Punct(p.x, p.y * Math.cos(theta) - Math.sin(theta));
+	}
 }

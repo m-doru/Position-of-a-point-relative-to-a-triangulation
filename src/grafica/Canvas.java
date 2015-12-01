@@ -8,6 +8,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -17,8 +18,9 @@ import util.Triunghi;
 
 public class Canvas extends JPanel {
 	private static final long serialVersionUID = 1510801660620433157L;
-	private static final int BIAS = 20;
-	Triangulare triangulare;
+	private static final int SCALAR_FACTOR = 25;
+	public Triangulare triangulare;
+	ArrayList<Punct> puncte;
 	public Canvas(){
 		;
 	}
@@ -26,27 +28,41 @@ public class Canvas extends JPanel {
 		setPreferredSize(new Dimension(700, 700));
 		this.triangulare = new Triangulare(triangulare);
 	}
-	public static Punct translatie(Punct p, double translX, double translY){
-		return new Punct(p.x * BIAS+translX, p.y * BIAS+translY);
+	public Canvas(ArrayList<Punct> puncte){
+		setPreferredSize(new Dimension(700, 700));
+		this.triangulare = null;
+		this.puncte = puncte;
 	}
-	public static Punct rotatie(){
-		throw new UnsupportedOperationException();
+	private void draw(Graphics2D g){
+		if(triangulare != null){
+		for(Triunghi t : triangulare.triunghiuri){
+			Punct a = Punct.transforma(t.a, SCALAR_FACTOR, 0, 0, SCALAR_FACTOR, 0, 0);
+			Punct b = Punct.transforma(t.b, SCALAR_FACTOR, 0, 0, SCALAR_FACTOR, 0, 0);
+			Punct c = Punct.transforma(t.c, SCALAR_FACTOR, 0, 0, SCALAR_FACTOR, 0, 0);
+			a = Punct.rotateY(a, Math.PI);
+			b = Punct.rotateY(b, Math.PI);
+			c = Punct.rotateY(c, Math.PI);
+			g.draw(new Line2D.Double(a.x, a.y, b.x, b.y));
+			g.draw(new Line2D.Double(a.x, a.y, c.x, c.y));
+			g.draw(new Line2D.Double(b.x, b.y, c.x, c.y));
+		}
+		}
+		else{
+			for(int i = 0; i < puncte.size(); ++i){
+				Punct a = Punct.transforma(puncte.get(i), SCALAR_FACTOR, 0, 0, SCALAR_FACTOR, 0, 0);
+				a = Punct.rotateY(a, Math.PI);
+				Punct b = Punct.transforma(puncte.get((i+1) % puncte.size()), SCALAR_FACTOR, 0, 0, SCALAR_FACTOR, 0, 0);
+				b = Punct.rotateY(b, Math.PI);
+				g.draw(new Line2D.Double(a.x, a.y, b.x, b.y));
+			}
+		}
 	}
 	@Override
 	public void paintComponent(Graphics gr){
 		Graphics2D g = (Graphics2D)gr;
 
 		g.translate(getWidth()/2, getHeight()/2);
-		g.rotate(Math.PI);
-//		g.scale(20, 20);
-//		g.shear(1, );
-		g.setTransform(new AffineTransform(-1, 0, -1, 1, -getWidth()/2, 0));
 		super.paintComponent(g);
-		for(Triunghi t : triangulare.triunghiuri){
-			g.draw(new Line2D.Double(t.a.x * BIAS , t.a.y * BIAS , t.b.x * BIAS , t.b.y * BIAS ));
-			g.draw(new Line2D.Double(t.a.x * BIAS , t.a.y * BIAS , t.c.x * BIAS , t.c.y * BIAS ));
-			g.draw(new Line2D.Double(t.b.x * BIAS , t.b.y * BIAS , t.c.x * BIAS , t.c.y * BIAS ));
-		}
-//		g.draw(new Line2D.Double(0, 0, 700, 700));
+		draw(g);
 	}
 }

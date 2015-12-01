@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicArrowButton;
 import util.*;
 public class Frame extends JFrame{
@@ -23,12 +24,24 @@ public class Frame extends JFrame{
 	Punct punctInCauza;
 	ReadPanel readPanel = new ReadPanel();
 	JButton inputDoneButton = new JButton();
+	Poligon poligon;
+	Canvas canvas;
 	boolean pressed = false;
-	public void draw(){
-		Poligon poligon = new Poligon(points);
+	public void drawPoligon(){
+		poligon = new Poligon(points);
 		poligon.makeTriangulare();
-		Canvas canvas = new Canvas(poligon.triangulare);
+		canvas = new Canvas(poligon.varfuri);
 		this.add(BorderLayout.SOUTH,canvas);
+	}
+	public void drawTriangulare(){
+		if(poligon == null){
+			poligon = new Poligon(points);
+			poligon.makeTriangulare();
+		}
+		this.remove(canvas);
+		this.repaint();
+		canvas = new Canvas(poligon.triangulare);
+		this.add(BorderLayout.SOUTH, canvas);
 	}
 	public Frame(){
 		this.add(BorderLayout.NORTH, readPanel);
@@ -40,9 +53,10 @@ public class Frame extends JFrame{
 			int pressed = 0;
 
 			private void firstTime(){
-				points = readPanel.getPoints();
+				//TODO remove comment
+//				points = readPanel.getPoints();
 				readPanel.changeInputActionListenerToReadLastPoint();
-				Frame.this.draw();
+				Frame.this.drawPoligon();
 			}
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -52,6 +66,13 @@ public class Frame extends JFrame{
 				}
 				if(pressed == 1){
 						readPanel.givePointsInputEvent(new ActionEvent("", 0, ""));
+						SwingUtilities.invokeLater(new Runnable() {
+							
+							@Override
+							public void run() {
+								Frame.this.drawTriangulare();	
+							}
+						});
 						//aici sa facem cautarea punctului
 						pressed = 2;
 						return;
