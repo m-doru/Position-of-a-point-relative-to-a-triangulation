@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 public class Graph {
 	ArrayList<ArrayList<Integer>> vecini;
-	
+	int numarNoduri;
 	Graph(int numarNoduri){
 		vecini = new ArrayList<>();
+		this.numarNoduri = numarNoduri;
 		for(int i = 0; i < numarNoduri; i++)
 			vecini.add(new ArrayList<Integer>());
 	}
 	
 	public void add(int nod, int vecin){
-		
+		if(nod >= numarNoduri)
+			throw new IndexOutOfBoundsException();
 		if(vecini.get(nod).size() == 0){
 			vecini.get(nod).add(vecin);
 			return;
