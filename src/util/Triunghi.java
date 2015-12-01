@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Triunghi {
-	Punct a,b,c;
+	public Punct a,b,c;
 	public Triunghi(){
 		this.a = new Punct();
 		this.b = new Punct();
