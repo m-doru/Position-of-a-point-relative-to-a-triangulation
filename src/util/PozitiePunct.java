@@ -1,8 +1,10 @@
 package util;
 
 public class PozitiePunct {
-	Punct a, b, c;
-	PunctFataDePoligon pozitie;
+	public Punct a;
+	public Punct b;
+	public Punct c;
+	public PunctFataDePoligon pozitie;
 	
 	PozitiePunct(PunctFataDePoligon pozitie){
 		this.a = null;
