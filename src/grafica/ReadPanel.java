@@ -1,5 +1,6 @@
 package grafica;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -7,7 +8,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 import util.*;
-import com.sun.xml.internal.ws.api.Component;
 
 class ReadPanel extends JPanel{
 	private static final long serialVersionUID = -1711538106692825836L;
@@ -117,7 +117,7 @@ class ReadPanel extends JPanel{
 	public Punct getPunctInCauza(){
 		return lastPoint;
 	}
-	public void add(Component comp){
+	public void myadd(Component comp){
 		this.add(comp);
 	}
 	public ArrayList<Punct> getPoints(){
