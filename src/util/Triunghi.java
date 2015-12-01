@@ -25,7 +25,7 @@ public class Triunghi {
 	}
 	public static double getArie(Punct A, Punct B, Punct C){
 		double rez = determinant(A, B, C);
-	    return 1/2*(Math.abs(rez));
+	    return 1.0/2.0*(Math.abs(rez));
 	}
 	private static boolean equals(double _a, double _b){
 		if(Math.abs(_b-_a) > 0.0000000000001)
@@ -34,10 +34,10 @@ public class Triunghi {
 	}
 	public PunctFataDeTriunghi contains(Punct p){
 		double _total, _arie1, _arie2, _arie3;
-		_total = getArie(this.a, this.b, this.c);
-		_arie1 = getArie(this.a, this.b, p);
-		_arie2 = getArie(this.a, this.c, p);
-		_arie3 = getArie(this.b, this.c, p);
+		_total = Triunghi.getArie(this.a, this.b, this.c);
+		_arie1 = Triunghi.getArie(this.a, this.b, p);
+		_arie2 = Triunghi.getArie(this.a, this.c, p);
+		_arie3 = Triunghi.getArie(this.b, this.c, p);
 		if(equals(_total, _arie1+_arie2+_arie3)){
 			if(Segment.contains(new Segment(a,b), p))
 				return PunctFataDeTriunghi.LATURA_AB;

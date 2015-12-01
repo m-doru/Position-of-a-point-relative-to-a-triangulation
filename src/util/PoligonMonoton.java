@@ -47,6 +47,7 @@ public class PoligonMonoton extends Poligon {
 		for(int i = 2; i < varfuriSortate.size() - 1; i++){
 			if(varfuriSortate.get(i).lant != stiva.get(stiva.size() - 1).lant){
 				while(stiva.size() > 1){
+
 					PunctLant top = stiva.remove(stiva.size() - 1);
 					triangulare.add(new Triunghi(varfuriSortate.get(i), top, stiva.get(stiva.size() - 1)));
 				}

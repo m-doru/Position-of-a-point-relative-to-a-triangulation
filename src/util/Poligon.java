@@ -174,7 +174,45 @@ public class Poligon {
 			return VertexConstants.UNDEFINE;
 	}
 	
-	public int getPosition(Punct p){
-		throw new UnsupportedOperationException();
+	public PozitiePunct getPosition(Punct p){
+		
+		PozitiePunct pozitiePunct = null;
+		
+		for(int i = 0; i < poligoaneMonotone.size(); i++){
+			for(int j = 0; j < poligoaneMonotone.get(i).triangulare.triunghiuri.size(); j++){
+				Triunghi triunghi = poligoaneMonotone.get(i).triangulare.triunghiuri.get(j);
+				
+				switch(triunghi.contains(p)){
+				case LATURA_AB: {
+						if(Math.abs(varfuri.indexOf(triunghi.a) - varfuri.indexOf(triunghi.b)) == 1){
+							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.b,PunctFataDePoligon.LATURA);
+						}
+						else
+							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.b,triunghi.c,PunctFataDePoligon.INTERIOR);
+					}
+				case LATURA_AC: {
+						if(Math.abs(varfuri.indexOf(triunghi.a) - varfuri.indexOf(triunghi.c)) == 1){
+							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.c,PunctFataDePoligon.LATURA);
+						}
+						else
+							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.b,triunghi.c,PunctFataDePoligon.INTERIOR);
+					}
+				case LATURA_BC: {
+						if(Math.abs(varfuri.indexOf(triunghi.b) - varfuri.indexOf(triunghi.c)) == 1){
+							return pozitiePunct = new PozitiePunct(triunghi.b,triunghi.c,PunctFataDePoligon.LATURA);
+						}
+						else
+							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.b,triunghi.c,PunctFataDePoligon.INTERIOR);
+					}
+				case INTERIOR: {
+							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.b,triunghi.c,PunctFataDePoligon.INTERIOR);
+					}
+				case EXTERIOR: {
+							pozitiePunct = new PozitiePunct(PunctFataDePoligon.EXTERIOR);
+					} break;
+				}
+			}
+		}
+		return pozitiePunct;
 	}
 }
