@@ -66,4 +66,8 @@ public class Triunghi {
 			return true;
 		return false;
 	}
+	
+	public String toString(){
+		return "[" + a + " " + " " + b + " " + c + "]";
+	}
 }
