@@ -137,10 +137,6 @@ public class Poligon {
 		if(this.poligoaneMonotone == null)
 			this.poligoaneMonotone = makeMonoton();
 		
-		//for(PoligonMonoton poligonMonoton : poligoaneMonotone){
-		//	System.out.println(poligonMonoton);
-		//}
-		
 		if(this.triangulare == null){
 			
 			triangulare = new Triangulare();
@@ -148,8 +144,7 @@ public class Poligon {
 			for(PoligonMonoton poligonMonoton : this.poligoaneMonotone){
 				poligonMonoton.makeTriangulare();
 				this.triangulare.add(poligonMonoton.triangulare.triunghiuri);
-				System.out.println("\n");
-				System.out.println(poligonMonoton.triangulare.triunghiuri);
+
 			}
 		}
 	}
