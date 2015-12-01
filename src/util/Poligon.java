@@ -184,21 +184,21 @@ public class Poligon {
 				
 				switch(triunghi.contains(p)){
 				case LATURA_AB: {
-						if(Math.abs(varfuri.indexOf(triunghi.a) - varfuri.indexOf(triunghi.b)) == 1){
+						if(Math.abs(varfuri.indexOf(triunghi.a) - varfuri.indexOf(triunghi.b)) == 1 || Math.abs(varfuri.indexOf(triunghi.a) - varfuri.indexOf(triunghi.c)) == varfuri.size() - 1){
 							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.b,PunctFataDePoligon.LATURA);
 						}
 						else
 							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.b,triunghi.c,PunctFataDePoligon.INTERIOR);
 					}
 				case LATURA_AC: {
-						if(Math.abs(varfuri.indexOf(triunghi.a) - varfuri.indexOf(triunghi.c)) == 1){
+						if(Math.abs(varfuri.indexOf(triunghi.a) - varfuri.indexOf(triunghi.c)) == 1 || Math.abs(varfuri.indexOf(triunghi.a) - varfuri.indexOf(triunghi.c)) == varfuri.size() - 1){
 							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.c,PunctFataDePoligon.LATURA);
 						}
 						else
 							return pozitiePunct = new PozitiePunct(triunghi.a,triunghi.b,triunghi.c,PunctFataDePoligon.INTERIOR);
 					}
 				case LATURA_BC: {
-						if(Math.abs(varfuri.indexOf(triunghi.b) - varfuri.indexOf(triunghi.c)) == 1){
+						if(Math.abs(varfuri.indexOf(triunghi.b) - varfuri.indexOf(triunghi.c)) == 1 || Math.abs(varfuri.indexOf(triunghi.a) - varfuri.indexOf(triunghi.c)) == varfuri.size() - 1){
 							return pozitiePunct = new PozitiePunct(triunghi.b,triunghi.c,PunctFataDePoligon.LATURA);
 						}
 						else

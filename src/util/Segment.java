@@ -46,7 +46,8 @@ public class Segment implements Comparable<Segment>{
 	public static boolean contains(Segment s,Punct p){
 		if(Triunghi.determinant(s.left, s.right, p) != 0)
 			return false;
-		if(s.left.y - s.right.y <= p.y - s.right.y)
+		//if(s.left.y - s.right.y <= p.y - s.right.y)
+		if(s.left.x <= p.x && p.x <= s.right.x)
 			return true;
 		return false;
 	}
