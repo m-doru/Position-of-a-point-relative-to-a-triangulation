@@ -1,9 +1,7 @@
 package util;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
 
 public class PoligonMonoton extends Poligon {
 	
@@ -41,19 +39,18 @@ public class PoligonMonoton extends Poligon {
 		Collections.sort(varfuriSortate);
 		//System.out.println(varfuriSortate + "\n");
 		triangulare = new Triangulare();
-		Deque<PunctLant> stiva = new ArrayDeque<>();
+		ArrayList<PunctLant> stiva = new ArrayList<>();
 		
-		stiva.push(varfuriSortate.get(0));
-		stiva.push(varfuriSortate.get(1));
+		stiva.add(varfuriSortate.get(0));
+		stiva.add(varfuriSortate.get(1));
 
 		for(int i = 2; i < varfuriSortate.size() - 1; i++){
-			if(varfuriSortate.get(i).lant != stiva.peek().lant){
+			if(varfuriSortate.get(i).lant != stiva.get(stiva.size() - 1).lant){
 				while(stiva.size() > 1){
-					PunctLant top = stiva.pop();
-					triangulare.add(new Triunghi(varfuriSortate.get(i), top, stiva.peek()));
-					System.out.println(top + " " + varfuriSortate.get(i));
+					PunctLant top = stiva.remove(stiva.size() - 1);
+					triangulare.add(new Triunghi(varfuriSortate.get(i), top, stiva.get(stiva.size() - 1)));
 				}
-				stiva.pop();
+				stiva.remove(stiva.size() - 1);
 				stiva.add(varfuriSortate.get(i - 1));
 				stiva.add(varfuriSortate.get(i));
 			}
@@ -62,30 +59,26 @@ public class PoligonMonoton extends Poligon {
 				PunctLant top;
 				do{
 					diagonalaInterior = false;
-				    top = stiva.pop();
-					if(Triunghi.determinant(stiva.peek(), top, varfuriSortate.get(i)) < 0 && varfuriSortate.get(i).lant == VertexConstants.REGULAR_RIGHT){
-						triangulare.add(new Triunghi(stiva.peek(), varfuriSortate.get(i), top));
-						System.out.println(top + " " + varfuriSortate.get(i));
+				    top = stiva.remove(stiva.size() - 1);
+					if(Triunghi.determinant(stiva.get(stiva.size()-1), top, varfuriSortate.get(i)) < 0 && varfuriSortate.get(i).lant == VertexConstants.REGULAR_RIGHT){
+						triangulare.add(new Triunghi(stiva.get(stiva.size() - 1), varfuriSortate.get(i), top));
 						diagonalaInterior = true;
 					}
 					else
-						if(Triunghi.determinant(stiva.peek(), top, varfuriSortate.get(i)) > 0 && varfuriSortate.get(i).lant == VertexConstants.REGULAR_LEFT){
-							triangulare.add(new Triunghi(stiva.peek(), varfuriSortate.get(i), top));
-							System.out.println(top + " " + varfuriSortate.get(i));
+						if(Triunghi.determinant(stiva.get(stiva.size()-1), top, varfuriSortate.get(i)) > 0 && varfuriSortate.get(i).lant == VertexConstants.REGULAR_LEFT){
+							triangulare.add(new Triunghi(stiva.get(stiva.size() - 1), varfuriSortate.get(i), top));
 							diagonalaInterior = true;
 						}
 
 				}while(diagonalaInterior && stiva.size() > 1);
-				
-				stiva.push(top);
-				stiva.push(varfuriSortate.get(i));
+				top = stiva.remove(stiva.size() - 1);
+				stiva.add(top);
+				stiva.add(varfuriSortate.get(i));
 			}
 		}
 		
 		PunctLant ultimulVarf = varfuriSortate.get(varfuriSortate.size() - 1);
-		PunctLant top = stiva.pop();
-		triangulare.add(new Triunghi(stiva.pop(), ultimulVarf, top));
-		System.out.println(top + " " + ultimulVarf);
-		
+		PunctLant top = stiva.remove(stiva.size() - 1);
+		triangulare.add(new Triunghi(stiva.remove(stiva.size() - 1), ultimulVarf, top));
 	}
 }
