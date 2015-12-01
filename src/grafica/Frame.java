@@ -1,27 +1,20 @@
 package grafica;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
 import javax.swing.SwingUtilities;
-import javax.swing.plaf.basic.BasicArrowButton;
 import util.*;
+
 public class Frame extends JFrame{
+	private static final long serialVersionUID = 1L;
 	ArrayList<Punct> points;
-	Punct punctInCauza;
+	Punct punctInCauza, punct;
 	ReadPanel readPanel = new ReadPanel();
 	JButton inputDoneButton = new JButton();
 	Poligon poligon;
@@ -40,7 +33,7 @@ public class Frame extends JFrame{
 		}
 		this.remove(canvas);
 		this.repaint();
-		canvas = new Canvas(poligon.triangulare);
+		canvas = new Canvas(poligon.triangulare,punct);
 		this.add(BorderLayout.SOUTH, canvas);
 	}
 	public Frame(){
@@ -66,6 +59,7 @@ public class Frame extends JFrame{
 				}
 				if(pressed == 1){
 						readPanel.givePointsInputEvent(new ActionEvent("", 0, ""));
+						punct = readPanel.getPunctInCauza();
 						SwingUtilities.invokeLater(new Runnable() {
 							
 							@Override
@@ -74,6 +68,19 @@ public class Frame extends JFrame{
 							}
 						});
 						//aici sa facem cautarea punctului
+						
+						PozitiePunct pp = poligon.getPosition(punct);
+						
+						if(pp.pozitie == PunctFataDePoligon.LATURA)
+							System.out.println("Punctul este pe latura: " + pp.a + " " + pp.b);
+						else
+							if(pp.pozitie == PunctFataDePoligon.INTERIOR){
+								
+								System.out.println("Punctul se afla in triunghiul: " + pp.a + " " + pp.b + " " + pp.c);
+							}
+							else
+								System.out.println(pp.pozitie);
+						
 						pressed = 2;
 						return;
 				}

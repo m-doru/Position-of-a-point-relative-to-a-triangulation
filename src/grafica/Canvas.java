@@ -1,12 +1,10 @@
 package grafica;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -24,8 +22,9 @@ public class Canvas extends JPanel {
 	public Canvas(){
 		;
 	}
-	public Canvas(Triangulare triangulare){
+	public Canvas(Triangulare triangulare, Punct punct){
 		setPreferredSize(new Dimension(700, 700));
+		this.punctInCauza = punct;
 		this.triangulare = new Triangulare(triangulare);
 	}
 	public Canvas(ArrayList<Punct> puncte){
@@ -45,7 +44,13 @@ public class Canvas extends JPanel {
 			g.draw(new Line2D.Double(a.x, a.y, b.x, b.y));
 			g.draw(new Line2D.Double(a.x, a.y, c.x, c.y));
 			g.draw(new Line2D.Double(b.x, b.y, c.x, c.y));
-		}
+			}
+		
+		 punctInCauza = Punct.transforma(punctInCauza, SCALAR_FACTOR, 0, 0, SCALAR_FACTOR, 0, 0);
+		 punctInCauza = Punct.rotateY(punctInCauza, Math.PI);
+		 g.setColor(Color.BLUE);
+		 //g.draw(new Line2D.Double(punctInCauza.x, punctInCauza.y, punctInCauza.x + 0.5, punctInCauza.y + 0.5));
+		 g.draw(new Rectangle2D.Double(punctInCauza.x - 1.5, punctInCauza.y - 1.5,3,3));
 		}
 		else{
 			for(int i = 0; i < puncte.size(); ++i){
