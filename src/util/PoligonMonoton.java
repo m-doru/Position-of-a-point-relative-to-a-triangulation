@@ -12,6 +12,6 @@ public class PoligonMonoton extends Poligon {
 	
 	@Override
 	public void makeTriangulare(){
-		throw new UnsupportedOperationException();
+		
 	}
 }
