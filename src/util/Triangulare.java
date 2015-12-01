@@ -3,7 +3,7 @@ package util;
 import java.util.ArrayList;
 
 public class Triangulare {
-	ArrayList<Triunghi> triunghiuri;
+	public ArrayList<Triunghi> triunghiuri;
 	public Triangulare(){
 		this.triunghiuri = new ArrayList<>();
 	}
