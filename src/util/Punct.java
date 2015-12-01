@@ -3,7 +3,7 @@ package util;
 public class Punct implements Comparable<Punct>{
 	public double x, y;
 	Punct(){}
-	Punct(double x, double y){
+	public Punct(double x, double y){
 		this.x = x;
 		this.y = y;
 	}
