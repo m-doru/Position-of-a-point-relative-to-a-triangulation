@@ -51,11 +51,11 @@ public class PoligonMonoton extends Poligon {
 				while(stiva.size() > 1){
 					PunctLant top = stiva.pop();
 					triangulare.add(new Triunghi(varfuriSortate.get(i), top, stiva.peek()));
-					System.out.println(top + " " + varfuriSortate.get(i));
+					//System.out.println(top + " " + varfuriSortate.get(i) + " 1 ");
 				}
 				stiva.pop();
-				stiva.add(varfuriSortate.get(i - 1));
-				stiva.add(varfuriSortate.get(i));
+				stiva.push(varfuriSortate.get(i - 1));
+				stiva.push(varfuriSortate.get(i));
 			}
 			else{
 				boolean diagonalaInterior = false;
@@ -65,13 +65,13 @@ public class PoligonMonoton extends Poligon {
 				    top = stiva.pop();
 					if(Triunghi.determinant(stiva.peek(), top, varfuriSortate.get(i)) < 0 && varfuriSortate.get(i).lant == VertexConstants.REGULAR_RIGHT){
 						triangulare.add(new Triunghi(stiva.peek(), varfuriSortate.get(i), top));
-						System.out.println(top + " " + varfuriSortate.get(i));
+						//System.out.println(top + " " + varfuriSortate.get(i) + " 2 ");
 						diagonalaInterior = true;
 					}
 					else
 						if(Triunghi.determinant(stiva.peek(), top, varfuriSortate.get(i)) > 0 && varfuriSortate.get(i).lant == VertexConstants.REGULAR_LEFT){
 							triangulare.add(new Triunghi(stiva.peek(), varfuriSortate.get(i), top));
-							System.out.println(top + " " + varfuriSortate.get(i));
+							//System.out.println(top + " " + varfuriSortate.get(i) + " 3 ");
 							diagonalaInterior = true;
 						}
 
@@ -85,7 +85,7 @@ public class PoligonMonoton extends Poligon {
 		PunctLant ultimulVarf = varfuriSortate.get(varfuriSortate.size() - 1);
 		PunctLant top = stiva.pop();
 		triangulare.add(new Triunghi(stiva.pop(), ultimulVarf, top));
-		System.out.println(top + " " + ultimulVarf);
+		//System.out.println(top + " " + ultimulVarf + " 4 ");
 		
 	}
 }

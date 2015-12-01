@@ -149,7 +149,7 @@ public class Poligon {
 				poligonMonoton.makeTriangulare();
 				this.triangulare.add(poligonMonoton.triangulare.triunghiuri);
 				System.out.println("\n");
-				//System.out.println(poligonMonoton.triangulare.triunghiuri);
+				System.out.println(poligonMonoton.triangulare.triunghiuri);
 			}
 		}
 	}
