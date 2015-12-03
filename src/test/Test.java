@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import grafica.Frame;
 import grafica.SwingConsole;
 import util.Punct;
@@ -26,7 +25,6 @@ public class Test {
 		}
 		
 		input.close();
-		System.out.println(inputArray);
 		Frame frame = new Frame();
 		frame.setPoints(inputArray);
 		SwingConsole.run(frame, 800, 900);
