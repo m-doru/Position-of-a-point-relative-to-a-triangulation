@@ -19,6 +19,7 @@ public class Canvas extends JPanel {
 	private static final int SCALAR_FACTOR = 25;
 	public Triangulare triangulare;
 	ArrayList<Punct> puncte;
+	Punct punctInCauza;
 	public Canvas(){
 		;
 	}
@@ -66,7 +67,7 @@ public class Canvas extends JPanel {
 	public void paintComponent(Graphics gr){
 		Graphics2D g = (Graphics2D)gr;
 
-		g.translate(getWidth()/2, getHeight()/2);
+		g.translate(getWidth()/4, 3*getHeight()/4);
 		super.paintComponent(g);
 		draw(g);
 	}

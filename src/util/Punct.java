@@ -88,4 +88,8 @@ public class Punct implements Comparable<Punct>{
 	public static Punct rotateY(Punct p, double theta){
 		return new Punct(p.x, p.y * Math.cos(theta) - Math.sin(theta));
 	}
+	public void rotateZ(double theta){
+		this.x = this.x*Math.cos(theta) + this.y * Math.sin(theta);
+		this.y = -this.x * Math.sin(theta) + this.y * Math.cos(theta);
+	}
 }

@@ -66,8 +66,13 @@ public class Triunghi {
 			return true;
 		return false;
 	}
-	
+	@Override
 	public String toString(){
 		return "[" + a + " " + " " + b + " " + c + "]";
+	}
+	void rotateZ(double theta){
+		this.a.rotateZ(theta);
+		this.b.rotateZ(theta);
+		this.c.rotateZ(theta);
 	}
 }

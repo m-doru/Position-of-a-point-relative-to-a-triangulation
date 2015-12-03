@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 import java.util.TreeMap;
 
 public class Poligon {
-	private ArrayList<PoligonMonoton> poligoaneMonotone;
+	public ArrayList<PoligonMonoton> poligoaneMonotone;
 	public ArrayList<Punct> varfuri;
 	public Triangulare triangulare;
 	public Poligon(){
@@ -30,6 +30,41 @@ public class Poligon {
 	public String toString(){
 		return varfuri.toString();
 	}
+	void rotateZ(double theta){
+		for(Punct varf : varfuri)
+			varf.rotateZ(theta);
+		
+	}
+	private boolean isMonoton(){
+		Punct maxim = new Punct(Double.MIN_VALUE, Double.MIN_VALUE),
+				minim = new Punct(Double.MAX_VALUE, Double.MAX_VALUE);
+		for(Punct p : varfuri){
+			if(maxim.compareStrictlyY(p) < 0)
+				maxim = p;
+			else if(minim.compareStrictlyY(p) > 0)
+				minim = p;
+		}
+		int maxPoz, minPoz;
+		maxPoz = varfuri.indexOf(maxim);
+		minPoz = varfuri.indexOf(minim);
+		Punct maxPunct = varfuri.get(maxPoz);
+		Punct minPunct = varfuri.get(minPoz);
+		for(int i = maxPoz; !maxPunct.equals(minPunct); i = (i+1) % varfuri.size()){
+			Punct curent = varfuri.get((i+1)%varfuri.size());
+			if(maxPunct.y < curent.y)
+				return false;
+			maxPunct = curent;
+		}
+		maxPunct = varfuri.get(maxPoz);
+		minPunct = varfuri.get(minPoz);
+		for(int i = minPoz; !minPunct.equals(maxPunct); i = (i+1)%varfuri.size()){
+			Punct curent = varfuri.get((i+1)%varfuri.size());
+			if(minPunct.y > curent.y)
+				return false;
+			minPunct = curent;
+		}
+		return true;
+	}
 	private ArrayList<PoligonMonoton> makeMonoton(){
 		TreeMap<Double,Segment> T = new TreeMap<>();
 		PriorityQueue<Punct> Q = new PriorityQueue<Punct>(varfuri);
@@ -49,21 +84,28 @@ public class Poligon {
 					Segment muchiePrecedentaCurenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)-1 + varfuri.size())%varfuri.size()));
 					Segment muchiePrecedenta = T.get(muchiePrecedentaCurenta.right.x);
 					//verificam daca helper e de tip merge si inseram
+					if(muchiePrecedenta != null){
 					if(this.tipVarf(muchiePrecedenta.helper) == VertexConstants.MERGE)
 						diagonale.add(new Segment(_varf, muchiePrecedenta.helper));
 					//scoatem (vi-1, vi) din T
 					T.remove(muchiePrecedenta.right.x);
+					}
 				}
 				break;
 			case SPLIT:{
 					//cautam in T cea mai apropiata muchie din partea stanga a lui vi si care a fost procesata de Linia de baleiere
-					Segment muchieOpusa = T.get(T.floorKey(_varf.x));
-					
+					Double cheieMuchieOpusa = T.floorKey(_varf.x);
+					if(cheieMuchieOpusa == null)
+						cheieMuchieOpusa = T.ceilingKey(_varf.x);
+					if(cheieMuchieOpusa != null){
+					Segment muchieOpusa = T.get(cheieMuchieOpusa);
+					if(muchieOpusa.left.x < _varf.x){	
 					//inseram diagonala de la vi la helperul muchiei gasite
 					diagonale.add(new Segment(_varf, muchieOpusa.helper));
 					//setam helperul muchiei gasite la vi
 					muchieOpusa.helper = _varf;
-					
+					}
+					}
 					//adaugam (vi; vi+1) in T
 					Segment muchieCurenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)+1)%varfuri.size()), _varf);
 					T.put(muchieCurenta.right.x, muchieCurenta);
@@ -74,11 +116,12 @@ public class Poligon {
 					Segment muchiePrecedentaCurenta = new Segment(_varf, varfuri.get((varfuri.indexOf(_varf)-1 + varfuri.size())%varfuri.size()));
 					Segment muchiePrecedenta = T.get(muchiePrecedentaCurenta.right.x);
 					//daca helperul muchiei e de tip merge, trasam diagnoala intre vi si helper
+					if(muchiePrecedenta != null){
 					if(this.tipVarf(muchiePrecedenta.helper) == VertexConstants.MERGE)
 						diagonale.add(new Segment(_varf, muchiePrecedenta.helper));
 					
 					T.remove(muchiePrecedenta.right.x);
-					
+					}
 					//cautam in T cea mai apropiata muchie din partea stanga a lui vi si care a fost procesata de Linia de baleiere
 					Segment muchieOpusa = T.get(T.floorKey(_varf.x));
 					
@@ -134,9 +177,9 @@ public class Poligon {
 		return poligoaneMonotone;
 	}
 	public void makeTriangulare(){
+		
 		if(this.poligoaneMonotone == null)
 			this.poligoaneMonotone = makeMonoton();
-		
 		if(this.triangulare == null){
 			
 			triangulare = new Triangulare();
@@ -148,23 +191,23 @@ public class Poligon {
 		}
 	}
 	
-	VertexConstants tipVarf(Punct x){
-		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).compareStrictlyY(x) >= 0 && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).compareStrictlyY(x) <= 0)
+	VertexConstants tipVarf(Punct p){
+		if(varfuri.get((varfuri.indexOf(p) + varfuri.size() - 1) % varfuri.size()).compareStrictlyY(p) > 0 && varfuri.get((varfuri.indexOf(p) + varfuri.size() + 1) % varfuri.size()).compareStrictlyY(p) < 0)
 			return VertexConstants.REGULAR_LEFT;
 		else
-		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).compareStrictlyY(x) <= 0 && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).compareStrictlyY(x) >= 0)
+		if(varfuri.get((varfuri.indexOf(p) + varfuri.size() - 1) % varfuri.size()).compareStrictlyY(p) < 0 && varfuri.get((varfuri.indexOf(p) + varfuri.size() + 1) % varfuri.size()).compareStrictlyY(p) > 0)
 			return VertexConstants.REGULAR_RIGHT;
 		else
-		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).y > x.y && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).y > x.y){
-			double det = Triunghi.determinant(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()), x, varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()));
+		if(varfuri.get((varfuri.indexOf(p) + varfuri.size() - 1) % varfuri.size()).y >= p.y && varfuri.get((varfuri.indexOf(p) + varfuri.size() + 1) % varfuri.size()).y >= p.y){
+			double det = Triunghi.determinant(varfuri.get((varfuri.indexOf(p) + varfuri.size() - 1) % varfuri.size()), p, varfuri.get((varfuri.indexOf(p) + varfuri.size() + 1) % varfuri.size()));
 			if(det < 0)
 				return VertexConstants.MERGE;
 			else
 				return VertexConstants.FINAL;		
 		}
 		else
-		if(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()).y < x.y && varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()).y < x.y){
-			double det = Triunghi.determinant(varfuri.get((varfuri.indexOf(x) + varfuri.size() - 1) % varfuri.size()), x, varfuri.get((varfuri.indexOf(x) + varfuri.size() + 1) % varfuri.size()));
+		if(varfuri.get((varfuri.indexOf(p) + varfuri.size() - 1) % varfuri.size()).y <= p.y && varfuri.get((varfuri.indexOf(p) + varfuri.size() + 1) % varfuri.size()).y <= p.y){
+			double det = Triunghi.determinant(varfuri.get((varfuri.indexOf(p) + varfuri.size() - 1) % varfuri.size()), p, varfuri.get((varfuri.indexOf(p) + varfuri.size() + 1) % varfuri.size()));
 			if(det < 0)
 				return VertexConstants.SPLIT;
 			else

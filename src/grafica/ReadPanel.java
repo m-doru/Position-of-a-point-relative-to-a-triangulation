@@ -127,11 +127,3 @@ class ReadPanel extends JPanel{
 		pointsInput.getActionListeners()[0].actionPerformed(e);
 	}
 }
-
-
-
-
-
-
-
-

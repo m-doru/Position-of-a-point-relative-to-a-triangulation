@@ -24,4 +24,10 @@ public class Triangulare {
 	public void remove(Triunghi t){
 		triunghiuri.remove(t);
 	}
+	public String toString(){
+		String ans = new String("");
+		for(Triunghi t : triunghiuri)
+			ans += t.toString() + "\n";
+		return ans;
+	}
 }
