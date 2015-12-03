@@ -142,7 +142,10 @@ public class Poligon {
 				}
 				break;
 			case REGULAR_RIGHT:{
-					Segment muchieOpusa = T.get(T.floorKey(_varf.x));
+					Double muchieOpusaKey = T.floorKey(_varf.x);
+					if(muchieOpusaKey == null)
+						muchieOpusaKey = T.ceilingKey(_varf.x);
+					Segment muchieOpusa = T.get(muchieOpusaKey);
 					if(this.tipVarf(muchieOpusa.helper) == VertexConstants.MERGE)
 						diagonale.add(new Segment(_varf, muchieOpusa.helper));
 					muchieOpusa.helper = _varf;
