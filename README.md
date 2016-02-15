@@ -1,1 +1,5 @@
-Given a polygon and a point, the program gives the position of the point relative to a triangulation of the polygon
+<h5>College project for Computational Geometry<\h5>
+
+Purpose of the project was to implement different algorithms we talked about in classes.
+
+We implemented an O(nlogn) algorithm for triangulating the poligon and an O(n) algorithm for determining the position of the point relative to the said triangulation.
