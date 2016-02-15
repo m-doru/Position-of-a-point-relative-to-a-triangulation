@@ -1,4 +1,4 @@
-<h5>College project for Computational Geometry<\h5>
+<h5>College project for Computational Geometry</h5>
 
 Purpose of the project was to implement different algorithms we talked about in classes.
 
